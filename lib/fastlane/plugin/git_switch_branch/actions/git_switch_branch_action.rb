@@ -9,10 +9,10 @@ module Fastlane
         else
           Actions.sh('git checkout .')
           result = Actions.sh("git checkout #{branch}")
-          if result.nil?
-            UI.success("Git branch match `#{branch}`, all good! 💪")
+          if result =~ /error:(.)/
+            UI.error("Git is not on a branch matching `#{branch}`. Current branch is `#{now_branch}`! Reasoin: #{result}.")
           else
-            UI.error("Git is not on a branch matching `#{branch}`. Current branch is `#{Actions.git_branch}`! can not checkout `#{branch}` reasoin: #{result}。please ensure the repo is checked out to the correct branch.")
+            UI.success("Git branch match `#{branch}`, all good! 💪")
           end
         end
       end
